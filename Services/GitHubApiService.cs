@@ -32,7 +32,7 @@ namespace GitHubApiClient.Services
         public async Task<IEnumerable<Repository>> GetRepositoriesForUserAsync(CancellationToken ct = default)
         {
             _client.Authenticator = new JwtAuthenticator(_token);
-
+            // TODO: class containing all of the routes as static strings
             var request = new RestRequest(
                 $"/users/{_username}/repos", Method.GET, DataFormat.Json
             ) as IRestRequest;
