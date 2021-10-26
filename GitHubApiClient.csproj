@@ -9,7 +9,7 @@
     <PackageId>ABU.Clients.GitHubApiClient</PackageId>
     <Version>0.0.1</Version>
     <Authors>Andre B.</Authors>
-    <Description>Client for accessing the GitHub API added to the service collection.</Description>
+    <Description>Client for accessing the GitHub API which is added to the service collection.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>GitHub, Abstraction, Client, API</PackageTags>
     <RepositoryUrl>https://github.com/aburke15/github-api-client</RepositoryUrl>
