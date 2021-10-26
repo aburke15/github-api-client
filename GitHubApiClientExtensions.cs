@@ -1,5 +1,4 @@
 ﻿using System;
-using Ardalis.GuardClauses;
 using GitHubApiClient.Abstractions;
 using GitHubApiClient.Options;
 using GitHubApiClient.Services;
@@ -19,19 +18,8 @@ namespace GitHubApiClient
             
             services.AddOptions();
             services.Configure(setupAction);
-            services.AddTransient<IRestClient, RestClient>(provider => new RestClient(baseUrl));
-            
-            services.AddTransient<IGitHubApiService, GitHubApiService>(provider =>
-            {
-                var options = provider.GetRequiredService<IOptions<AddGitHubApiClientOptions>>().Value;
-
-                Guard.Against.Null(options, nameof(options));
-
-                var token = options.GetToken();
-                Guard.Against.NullOrWhiteSpace(token, nameof(token));
-
-                return new GitHubApiService();
-            });
+            services.AddTransient<IRestClient, RestClient>(_ => new RestClient(baseUrl));
+            services.AddTransient<IGitHubApiService, GitHubApiService>();
             
             return services;
         }
