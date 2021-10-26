@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <PackageId>ABU.Clients.GitHubApiClient</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Andre B.</Authors>
+    <Description>Client for accessing the GitHub API added to the service collection.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>GitHub, Abstraction, Client, API</PackageTags>
+    <RepositoryUrl>https://github.com/aburke15/github-api-client</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
