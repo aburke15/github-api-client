@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using GitHubApiClient.Abstractions;
+using GitHubApiClient.Constants;
 using GitHubApiClient.Models;
 using GitHubApiClient.Options;
 using JetBrains.Annotations;
@@ -41,7 +42,7 @@ namespace GitHubApiClient.Services
             _client.Authenticator = new JwtAuthenticator(_token);
             // TODO: class containing all of the routes as static strings
             var request = new RestRequest(
-                $"/users/{_username}/repos", Method.GET, DataFormat.Json
+                string.Format(GitHubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
             ) as IRestRequest;
 
             var response = await _client.ExecuteGetAsync(request, ct);
