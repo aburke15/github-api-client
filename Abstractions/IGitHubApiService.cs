@@ -7,6 +7,6 @@ namespace GitHubApiClient.Abstractions
 {
     public interface IGitHubApiService
     {
-        Task<IEnumerable<Repository>> GetRepositoriesForUserAsync(CancellationToken ct = default);
+        Task<MethodResult<IEnumerable<Repository>>> GetRepositoriesForUserAsync(CancellationToken ct = default);
     }
 }

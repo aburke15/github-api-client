@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using GitHubApiClient.Abstractions;
 using GitHubApiClient.Models;
 using GitHubApiClient.Options;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
@@ -29,8 +31,13 @@ namespace GitHubApiClient.Services
             _username = Guard.Against.NullOrWhiteSpace(gitHubOptions.Username, nameof(gitHubOptions.Username));
         }
         
-        public async Task<IEnumerable<Repository>> GetRepositoriesForUserAsync(CancellationToken ct = default)
+        public async Task<MethodResult<IEnumerable<Repository>>> GetRepositoriesForUserAsync(CancellationToken ct = default)
         {
+            var methodResult = new MethodResult<IEnumerable<Repository>>()
+            {
+                Result = Enumerable.Empty<Repository>()
+            };
+            
             _client.Authenticator = new JwtAuthenticator(_token);
             // TODO: class containing all of the routes as static strings
             var request = new RestRequest(
@@ -39,8 +46,16 @@ namespace GitHubApiClient.Services
 
             var response = await _client.ExecuteGetAsync(request, ct);
 
-            return !response.IsSuccessful ? Enumerable.Empty<Repository>() 
-                : JsonConvert.DeserializeObject<IEnumerable<Repository>>(response.Content)!;
+            if (!response.IsSuccessful)
+            {
+                methodResult.Message = response.ErrorMessage;
+                return methodResult;
+            }
+
+            methodResult.IsSuccessful = true;
+            methodResult.Result = JsonConvert.DeserializeObject<IEnumerable<Repository>>(response.Content);
+
+            return methodResult;
         }
     }
 }
