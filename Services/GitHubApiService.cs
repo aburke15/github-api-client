@@ -40,7 +40,7 @@ namespace GitHubApiClient.Services
             };
             
             _client.Authenticator = new JwtAuthenticator(_token);
-            // TODO: class containing all of the routes as static strings
+            
             var request = new RestRequest(
                 string.Format(GitHubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
             ) as IRestRequest;
