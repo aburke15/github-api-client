@@ -3,8 +3,6 @@ name: Upload dotnet package
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs: 
   deploy:
