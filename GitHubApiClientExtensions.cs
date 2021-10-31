@@ -18,11 +18,9 @@ namespace GitHubApiClient
             services = Guard.Against.Null(services, nameof(services));
             setupAction = Guard.Against.Null(setupAction, nameof(setupAction));
 
-            const string baseUrl = "https://api.github.com";
-            
             services.AddOptions();
             services.Configure(setupAction);
-            services.AddTransient<IRestClient, RestClient>(_ => new RestClient(baseUrl));
+            services.AddTransient<IRestClient, RestClient>(_ => new RestClient(new Uri("https://api.github.com/")));
             services.AddTransient<IGitHubApiService, GitHubApiService>();
             
             return services;
