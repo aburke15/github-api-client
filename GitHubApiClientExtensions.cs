@@ -20,7 +20,7 @@ namespace GitHubApiClient
 
             services.AddOptions();
             services.Configure(setupAction);
-            services.AddTransient<IRestClient, RestClient>(_ => new RestClient(new Uri("https://api.github.com/")));
+            services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<IGitHubApiService, GitHubApiService>();
             
             return services;
