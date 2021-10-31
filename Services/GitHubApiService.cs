@@ -20,7 +20,6 @@ namespace GitHubApiClient.Services
     public class GitHubApiService : IGitHubApiService
     {
         private readonly IRestClient _client;
-        private readonly string _token;
         private readonly string _username;
         
         public GitHubApiService(IRestClient client, IOptions<AddGitHubApiClientOptions> gitHubApiClientOptions)
@@ -28,8 +27,11 @@ namespace GitHubApiClient.Services
             _client = Guard.Against.Null(client, nameof(client));
             var gitHubOptions = Guard.Against.Null(gitHubApiClientOptions.Value, nameof(gitHubApiClientOptions.Value));
 
-            _token = Guard.Against.NullOrWhiteSpace(gitHubOptions.Token, nameof(gitHubOptions.Token));
+            var token = Guard.Against.NullOrWhiteSpace(gitHubOptions.Token, nameof(gitHubOptions.Token));
             _username = Guard.Against.NullOrWhiteSpace(gitHubOptions.Username, nameof(gitHubOptions.Username));
+            
+            _client.BaseUrl = new Uri(GitHubRoutes.BaseUrl);
+            _client.Authenticator = new JwtAuthenticator(token);
         }
         
         public async Task<MethodResult<IEnumerable<Repository>>> GetRepositoriesForUserAsync(CancellationToken ct = default)
@@ -38,8 +40,6 @@ namespace GitHubApiClient.Services
             {
                 Result = Enumerable.Empty<Repository>()
             };
-            
-            _client.Authenticator = new JwtAuthenticator(_token);
             
             var request = new RestRequest(
                 string.Format(GitHubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
