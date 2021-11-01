@@ -34,11 +34,11 @@ namespace GitHubApiClient.Services
             _client.Authenticator = new JwtAuthenticator(token);
         }
         
-        public async Task<MethodResult<string?>> GetRepositoriesForUserAsync(CancellationToken ct = default)
+        public async Task<MethodResult> GetRepositoriesForUserAsync(CancellationToken ct = default)
         {
-            var methodResult = new MethodResult<string?>()
+            var methodResult = new MethodResult
             {
-                Result = null
+                Json = null
             };
             
             var request = new RestRequest(
@@ -54,7 +54,7 @@ namespace GitHubApiClient.Services
             }
 
             methodResult.IsSuccessful = true;
-            methodResult.Result = JsonConvert.SerializeObject(response.Content, Formatting.Indented);
+            methodResult.Json = response.Content;
 
             return methodResult;
         }

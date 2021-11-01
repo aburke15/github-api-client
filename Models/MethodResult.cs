@@ -3,10 +3,10 @@ using JetBrains.Annotations;
 
 namespace GitHubApiClient.Models
 {
-    public class MethodResult<T>
+    public class MethodResult
     {
         [UsedImplicitly]
-        public T? Result { get; set; }
+        public string? Json { get; set; }
         [UsedImplicitly]
         public string? Message { get; set; }
         [UsedImplicitly]
