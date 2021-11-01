@@ -17,12 +17,12 @@ using RestSharp.Authenticators;
 
 namespace GitHubApiClient.Services
 {
-    public class GitHubApiService : IGitHubApiService
+    public class GitHubApiClient : IGitHubApiClient
     {
         private readonly IRestClient _client;
         private readonly string _username;
         
-        public GitHubApiService(IRestClient client, IOptions<AddGitHubApiClientOptions> gitHubApiClientOptions)
+        public GitHubApiClient(IRestClient client, IOptions<AddGitHubApiClientOptions> gitHubApiClientOptions)
         {
             _client = Guard.Against.Null(client, nameof(client));
             var gitHubOptions = Guard.Against.Null(gitHubApiClientOptions.Value, nameof(gitHubApiClientOptions.Value));
@@ -34,11 +34,11 @@ namespace GitHubApiClient.Services
             _client.Authenticator = new JwtAuthenticator(token);
         }
         
-        public async Task<MethodResult<IEnumerable<Repository>>> GetRepositoriesForUserAsync(CancellationToken ct = default)
+        public async Task<MethodResult<string?>> GetRepositoriesForUserAsync(CancellationToken ct = default)
         {
-            var methodResult = new MethodResult<IEnumerable<Repository>>()
+            var methodResult = new MethodResult<string?>()
             {
-                Result = Enumerable.Empty<Repository>()
+                Result = null
             };
             
             var request = new RestRequest(
@@ -54,7 +54,7 @@ namespace GitHubApiClient.Services
             }
 
             methodResult.IsSuccessful = true;
-            methodResult.Result = JsonConvert.DeserializeObject<IEnumerable<Repository>>(response.Content);
+            methodResult.Result = JsonConvert.SerializeObject(response.Content, Formatting.Indented);
 
             return methodResult;
         }
