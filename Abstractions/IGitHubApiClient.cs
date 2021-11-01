@@ -5,8 +5,8 @@ using GitHubApiClient.Models;
 
 namespace GitHubApiClient.Abstractions
 {
-    public interface IGitHubApiService
+    public interface IGitHubApiClient
     {
-        Task<MethodResult<IEnumerable<Repository>>> GetRepositoriesForUserAsync(CancellationToken ct = default);
+        Task<MethodResult<string?>> GetRepositoriesForUserAsync(CancellationToken ct = default);
     }
 }
