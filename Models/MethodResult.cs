@@ -1,15 +1,11 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace GitHubApiClient.Models
+namespace GitHubApiClient.Models;
+
+public class MethodResult
 {
-    public class MethodResult
-    {
-        [UsedImplicitly]
-        public string? Json { get; set; }
-        [UsedImplicitly]
-        public string? Message { get; set; }
-        [UsedImplicitly]
-        public bool IsSuccessful { get; set; }
-    }
+    [UsedImplicitly] public string? Json { get; set; }
+    [UsedImplicitly] public string? Message { get; set; }
+    [UsedImplicitly] public bool IsSuccessful { get; set; }
 }

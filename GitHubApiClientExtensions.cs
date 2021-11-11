@@ -7,23 +7,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace GitHubApiClient
-{
-    public static class GitHubApiClientExtensions
-    {
-        public static IServiceCollection AddGitHubApiClient(
-            this IServiceCollection services, 
-            Action<AddGitHubApiClientOptions> setupAction)
-        {
-            services = Guard.Against.Null(services, nameof(services));
-            setupAction = Guard.Against.Null(setupAction, nameof(setupAction));
+namespace GitHubApiClient;
 
-            services.AddOptions();
-            services.Configure(setupAction);
-            services.AddTransient<IRestClient, RestClient>();
-            services.AddTransient<IGitHubApiClient, Services.GitHubApiClient>();
-            
-            return services;
-        }
+public static class GitHubApiClientExtensions
+{
+    public static IServiceCollection AddGitHubApiClient(
+        this IServiceCollection services,
+        Action<AddGitHubApiClientOptions> setupAction)
+    {
+        services = Guard.Against.Null(services, nameof(services));
+        setupAction = Guard.Against.Null(setupAction, nameof(setupAction));
+
+        services.AddOptions();
+        services.Configure(setupAction);
+        services.AddTransient<IRestClient, RestClient>();
+        services.AddTransient<IGitHubApiClient, Services.GitHubApiClient>();
+
+        return services;
     }
 }

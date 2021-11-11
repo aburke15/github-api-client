@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 using GitHubApiClient.Models;
 using JetBrains.Annotations;
 
-namespace GitHubApiClient.Abstractions
+namespace GitHubApiClient.Abstractions;
+
+public interface IGitHubApiClient
 {
-    public interface IGitHubApiClient
-    {
-        [UsedImplicitly]
-        Task<MethodResult> GetRepositoriesForUserAsync(CancellationToken ct = default);
-    }
+    [UsedImplicitly]
+    Task<MethodResult> GetRepositoriesForUserAsync(CancellationToken ct = default);
 }
