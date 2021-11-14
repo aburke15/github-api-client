@@ -3,14 +3,17 @@ using Ardalis.GuardClauses;
 using GitHubApiClient.Abstractions;
 using GitHubApiClient.Options;
 using GitHubApiClient.Services;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace GitHubApiClient;
 
+[UsedImplicitly]
 public static class GitHubApiClientExtensions
 {
+    [UsedImplicitly]
     public static IServiceCollection AddGitHubApiClient(
         this IServiceCollection services,
         Action<AddGitHubApiClientOptions> setupAction)

@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <PackageId>ABU.Clients.GitHubApiClient</PackageId>
-    <Version>1.0.01</Version>
+    <Version>1.0.02</Version>
     <Authors>Andre B.</Authors>
     <Description>Client for accessing the GitHub API which is added to the service collection.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
