@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using GitHubApiClient.Models;
+using ABU.GitHubApiClient.Models;
 using JetBrains.Annotations;
 
-namespace GitHubApiClient.Abstractions;
+namespace ABU.GitHubApiClient.Abstractions;
 
 public interface IGitHubApiClient
 {

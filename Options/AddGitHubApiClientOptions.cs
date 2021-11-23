@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace GitHubApiClient.Options;
+namespace ABU.GitHubApiClient.Options;
 
 [UsedImplicitly]
 public class AddGitHubApiClientOptions
