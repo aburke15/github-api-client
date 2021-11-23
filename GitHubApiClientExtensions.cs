@@ -1,14 +1,13 @@
 ﻿using System;
+using ABU.GitHubApiClient.Abstractions;
+using ABU.GitHubApiClient.Options;
 using Ardalis.GuardClauses;
-using GitHubApiClient.Abstractions;
-using GitHubApiClient.Options;
-using GitHubApiClient.Services;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace GitHubApiClient;
+namespace ABU.GitHubApiClient;
 
 [UsedImplicitly]
 public static class GitHubApiClientExtensions

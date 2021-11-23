@@ -1,6 +1,6 @@
 using System.Threading;
 
-namespace GitHubApiClient.Constants;
+namespace ABU.GitHubApiClient.Constants;
 
 internal static class GitHubRoutes
 {

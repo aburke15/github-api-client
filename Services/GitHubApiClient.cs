@@ -4,18 +4,18 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using ABU.GitHubApiClient.Abstractions;
+using ABU.GitHubApiClient.Constants;
+using ABU.GitHubApiClient.Models;
+using ABU.GitHubApiClient.Options;
 using Ardalis.GuardClauses;
-using GitHubApiClient.Abstractions;
-using GitHubApiClient.Constants;
-using GitHubApiClient.Models;
-using GitHubApiClient.Options;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
-namespace GitHubApiClient.Services;
+namespace ABU.GitHubApiClient.Services;
 
 public class GitHubApiClient : IGitHubApiClient
 {

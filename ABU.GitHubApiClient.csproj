@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 
-    <PackageId>ABU.Clients.GitHubApiClient</PackageId>
-    <Version>1.0.02</Version>
+    <PackageId>ABU.Clients.ABU.GitHubApiClient</PackageId>
+    <Version>1.0.03</Version>
     <Authors>Andre B.</Authors>
     <Description>Client for accessing the GitHub API which is added to the service collection.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
