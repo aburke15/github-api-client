@@ -1,21 +1,21 @@
 ﻿using System;
-using ABU.GitHubApiClient.Abstractions;
-using ABU.GitHubApiClient.Options;
+using ABU.GithubApiClient.Abstractions;
+using ABU.GithubApiClient.Options;
 using Ardalis.GuardClauses;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace ABU.GitHubApiClient;
+namespace ABU.GithubApiClient;
 
 [UsedImplicitly]
-public static class GitHubApiClientExtensions
+public static class GithubApiClientExtensions
 {
     [UsedImplicitly]
     public static IServiceCollection AddGitHubApiClient(
         this IServiceCollection services,
-        Action<AddGitHubApiClientOptions> setupAction)
+        Action<AddGithubApiClientOptions> setupAction)
     {
         services = Guard.Against.Null(services, nameof(services));
         setupAction = Guard.Against.Null(setupAction, nameof(setupAction));
@@ -23,7 +23,7 @@ public static class GitHubApiClientExtensions
         services.AddOptions();
         services.Configure(setupAction);
         services.AddTransient<IRestClient, RestClient>();
-        services.AddTransient<IGitHubApiClient, Services.GitHubApiClient>();
+        services.AddTransient<IGithubApiClient, Services.GithubApiClient>();
 
         return services;
     }

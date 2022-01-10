@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ABU.GitHubApiClient.Models;
+using ABU.GithubApiClient.Models;
 using JetBrains.Annotations;
 
-namespace ABU.GitHubApiClient.Abstractions;
+namespace ABU.GithubApiClient.Abstractions;
 
-public interface IGitHubApiClient
+public interface IGithubApiClient
 {
     [UsedImplicitly]
     Task<MethodResult> GetRepositoriesForUserAsync(CancellationToken ct = default);
