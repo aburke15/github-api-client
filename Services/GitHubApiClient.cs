@@ -4,10 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using ABU.GithubApiClient.Abstractions;
-using ABU.GithubApiClient.Constants;
-using ABU.GithubApiClient.Models;
-using ABU.GithubApiClient.Options;
+using ABU.GitHubApiClient.Abstractions;
+using ABU.GitHubApiClient.Constants;
+using ABU.GitHubApiClient.Models;
+using ABU.GitHubApiClient.Options;
 using Ardalis.GuardClauses;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
@@ -15,14 +15,14 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
-namespace ABU.GithubApiClient.Services;
+namespace ABU.GitHubApiClient.Services;
 
-public class GithubApiClient : IGithubApiClient
+public class GitHubApiClient : IGitHubApiClient
 {
     private readonly IRestClient _client;
     private readonly string _username;
 
-    public GithubApiClient(IRestClient client, IOptions<AddGithubApiClientOptions> gitHubApiClientOptions)
+    public GitHubApiClient(IRestClient client, IOptions<AddGitHubApiClientOptions> gitHubApiClientOptions)
     {
         _client = Guard.Against.Null(client, nameof(client));
         var gitHubOptions = Guard.Against.Null(gitHubApiClientOptions.Value, nameof(gitHubApiClientOptions.Value));
@@ -30,7 +30,7 @@ public class GithubApiClient : IGithubApiClient
         var token = Guard.Against.NullOrWhiteSpace(gitHubOptions.Token, nameof(gitHubOptions.Token));
         _username = Guard.Against.NullOrWhiteSpace(gitHubOptions.Username, nameof(gitHubOptions.Username));
 
-        _client.BaseUrl = new Uri(GithubRoutes.BaseUrl);
+        _client.BaseUrl = new Uri(GitHubRoutes.BaseUrl);
         _client.Authenticator = new JwtAuthenticator(token);
     }
 
@@ -42,7 +42,7 @@ public class GithubApiClient : IGithubApiClient
         };
 
         var request = new RestRequest(
-            string.Format(GithubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
+            string.Format(GitHubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
         ) as IRestRequest;
 
         var response = await _client.ExecuteGetAsync(request, ct);

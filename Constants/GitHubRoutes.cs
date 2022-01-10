@@ -1,8 +1,8 @@
 using System.Threading;
 
-namespace ABU.GithubApiClient.Constants;
+namespace ABU.GitHubApiClient.Constants;
 
-internal static class GithubRoutes
+internal static class GitHubRoutes
 {
     internal const string BaseUrl = "https://api.github.com";
 

@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace ABU.GithubApiClient.Models;
+namespace ABU.GitHubApiClient.Models;
 
 public class MethodResult
 {
