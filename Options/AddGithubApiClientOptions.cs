@@ -1,9 +1,9 @@
 using JetBrains.Annotations;
 
-namespace ABU.GitHubApiClient.Options;
+namespace ABU.GithubApiClient.Options;
 
 [UsedImplicitly]
-public class AddGitHubApiClientOptions
+public class AddGithubApiClientOptions
 {
     public string? Token { get; private set; }
     public string? Username { get; private set; }
