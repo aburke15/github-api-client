@@ -30,14 +30,13 @@ public class GitHubApiClient : IGitHubApiClient
 
         var token = Guard.Against.NullOrWhiteSpace(gitHubOptions.Token, nameof(gitHubOptions.Token));
         _username = Guard.Against.NullOrWhiteSpace(gitHubOptions.Username, nameof(gitHubOptions.Username));
-
-        _client.BaseUrl = new Uri(GitHubRoutes.BaseUrl);
+        
         _client.Authenticator = new JwtAuthenticator(token);
     }
 
     public async Task<MethodResult> GetRepositoriesForUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
     {
-        var builder = new UriBuilder($"{_client.BaseUrl}{string.Format(GitHubRoutes.PublicReposRoute, _username)}")
+        var builder = new UriBuilder($"{GitHubRoutes.BaseUrl}{string.Format(GitHubRoutes.PublicReposRoute, _username)}")
         {
             Query = routeParams.PerPage
         };
@@ -47,7 +46,7 @@ public class GitHubApiClient : IGitHubApiClient
 
     public async Task<MethodResult> GetRepositoriesForAuthUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
     {
-        var builder = new UriBuilder($"{_client.BaseUrl}{GitHubRoutes.PrivateReposRoute}")
+        var builder = new UriBuilder($"{GitHubRoutes.BaseUrl}{GitHubRoutes.PrivateReposRoute}")
         {
             Query = routeParams.PerPage
         };
