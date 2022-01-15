@@ -12,7 +12,7 @@ public class GitHubRepoRouteParams
     [JsonProperty("per_page")]
     public string PerPage
     {
-        get => $"{GetType().GetCustomAttribute<JsonPropertyAttribute>()!.PropertyName}={_perPage}";
-        set => _perPage = int.TryParse(value, out var num) ? num : 30;
+        get => $"per_page={_perPage}";
+        set => _perPage = int.TryParse(value, out var result) ? result : 30;
     }
 }
