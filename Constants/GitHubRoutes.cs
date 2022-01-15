@@ -11,7 +11,7 @@ internal static class GitHubRoutes
     /// </summary>
     internal const string PublicReposRoute = "/users/{0}/repos";
     /// <summary>
-    /// Route for getting the user's repos if authenticated, default page size is 30.
+    /// Route for getting the user's repos if authenticated, default page size is 30 max is 100.
     /// </summary>
-    internal const string PrivateReposRoute = "/users/repos";
+    internal const string PrivateReposRoute = "/user/repos";
 }
