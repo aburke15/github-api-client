@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,28 +35,47 @@ public class GitHubApiClient : IGitHubApiClient
         _client.Authenticator = new JwtAuthenticator(token);
     }
 
-    public async Task<MethodResult> GetRepositoriesForUserAsync(CancellationToken ct = default)
+    public async Task<MethodResult> GetRepositoriesForUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
     {
-        var methodResult = new MethodResult
+        var builder = new UriBuilder($"{_client.BaseUrl}{string.Format(GitHubRoutes.PublicReposRoute, _username)}")
         {
-            Json = null
+            Query = routeParams.PerPage
         };
+        
+        return await GetRepositoriesAsync(builder.ToString(), ct);
+    }
+
+    public async Task<MethodResult> GetRepositoriesForAuthUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
+    {
+        var builder = new UriBuilder($"{_client.BaseUrl}{GitHubRoutes.PrivateReposRoute}")
+        {
+            Query = routeParams.PerPage
+        };
+        
+        return await GetRepositoriesAsync(builder.ToString(), ct);
+    }
+
+    private async Task<MethodResult> GetRepositoriesAsync(string resource, CancellationToken ct = default)
+    {
+        var result = new MethodResult();
 
         var request = new RestRequest(
-            string.Format(GitHubRoutes.UserReposRoute, _username), Method.GET, DataFormat.Json
+            resource, Method.GET, DataFormat.Json
         ) as IRestRequest;
 
         var response = await _client.ExecuteGetAsync(request, ct);
 
         if (!response.IsSuccessful)
         {
-            methodResult.Message = response.ErrorMessage;
-            return methodResult;
+            result.Message = response.ErrorMessage;
+            result.SetIsSuccessfulFalse();
+            
+            return result;
         }
 
-        methodResult.IsSuccessful = true;
-        methodResult.Json = response.Content;
+        result.SetIsSuccessfulTrue();
+        result.Json = response.Content;
 
-        return methodResult;
+        return result;
     }
 }
