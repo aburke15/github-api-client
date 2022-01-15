@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -13,6 +14,14 @@ public class GitHubRepoRouteParams
     public string PerPage
     {
         get => $"per_page={_perPage}";
-        set => _perPage = int.TryParse(value, out var result) ? result : 30;
+        set
+        {
+            if (int.TryParse(value, out var result))
+                result = result > 100 ? 100 : result;
+            else
+                result = 30;
+
+            _perPage = result;
+        }
     }
 }
