@@ -23,6 +23,8 @@ public static class GitHubApiClientExtensions
         services.AddOptions();
         services.Configure(setupAction);
         services.AddTransient<IRestClient, RestClient>();
+        // services.AddRefitClient<>()
+        //     .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com"));
         services.AddTransient<IGitHubApiClient, Services.GitHubApiClient>();
 
         return services;
