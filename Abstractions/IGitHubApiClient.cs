@@ -9,8 +9,8 @@ namespace ABU.GitHubApiClient.Abstractions;
 public interface IGitHubApiClient
 {
     [UsedImplicitly]
-    Task<MethodResult> GetRepositoriesForUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default);
+    Task<MethodResult> GetRepositoriesForUserAsync(RepositoryRouteParams routeParams, CancellationToken ct = default);
 
     [UsedImplicitly]
-    Task<MethodResult> GetRepositoriesForAuthUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default);
+    Task<MethodResult> GetRepositoriesForAuthUserAsync(RepositoryRouteParams routeParams, CancellationToken ct = default);
 }

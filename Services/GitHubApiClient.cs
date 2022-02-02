@@ -30,27 +30,27 @@ public class GitHubApiClient : IGitHubApiClient
 
         var token = Guard.Against.NullOrWhiteSpace(gitHubOptions.Token, nameof(gitHubOptions.Token));
         _username = Guard.Against.NullOrWhiteSpace(gitHubOptions.Username, nameof(gitHubOptions.Username));
-        
+
         _client.Authenticator = new JwtAuthenticator(token);
     }
 
-    public async Task<MethodResult> GetRepositoriesForUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
+    public async Task<MethodResult> GetRepositoriesForUserAsync(RepositoryRouteParams routeParams, CancellationToken ct = default)
     {
         var builder = new UriBuilder($"{GitHubRoutes.BaseUrl}{string.Format(GitHubRoutes.PublicReposRoute, _username)}")
         {
             Query = routeParams.PerPage
         };
-        
+
         return await GetRepositoriesAsync(builder.ToString(), ct);
     }
 
-    public async Task<MethodResult> GetRepositoriesForAuthUserAsync(GitHubRepoRouteParams routeParams, CancellationToken ct = default)
+    public async Task<MethodResult> GetRepositoriesForAuthUserAsync(RepositoryRouteParams routeParams, CancellationToken ct = default)
     {
         var builder = new UriBuilder($"{GitHubRoutes.BaseUrl}{GitHubRoutes.PrivateReposRoute}")
         {
             Query = routeParams.PerPage
         };
-        
+
         return await GetRepositoriesAsync(builder.ToString(), ct);
     }
 
@@ -68,7 +68,7 @@ public class GitHubApiClient : IGitHubApiClient
         {
             result.Message = response.ErrorMessage;
             result.SetIsSuccessfulFalse();
-            
+
             return result;
         }
 
