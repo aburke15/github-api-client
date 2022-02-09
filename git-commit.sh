@@ -1,8 +1,9 @@
-echo "Running git commit script"
+echo "running git commit script"
 git add .
-echo "Enter commit message"
+echo "enter commit message:"
 read message
 git commit -m "$message"
-echo "Enter branch name"
+echo "enter branch name:"
 read branch
 git push -u origin $branch
+echo "changes committed to branch: $branch"
