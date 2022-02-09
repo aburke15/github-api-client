@@ -1,3 +1,5 @@
+using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -6,14 +8,15 @@ namespace ABU.GitHubApiClient.Models;
 [UsedImplicitly]
 public class RepositoryRouteParams
 {
-    private readonly List<string> _visibilityList = new List<string>
-    {
-        "all", "public", "private"
-    };
+    private int _perPage;
+    private string? _visibility = "all";
+    private string? _affiliation = "owner,collaborator,organization_member";
+    private int _page;
 
-    private int _perPage = 30;
-    private string _visibility = "all";
+    private readonly List<string> _visibilityList = new() { "all", "public", "private" };
 
+    // default: 30
+    // options 30 to 100
     [JsonProperty("per_page")]
     public string PerPage
     {
@@ -22,25 +25,28 @@ public class RepositoryRouteParams
         {
             const int min = 30;
             const int max = 100;
-            if (int.TryParse(value, out var result))
+
+            if (!int.TryParse(value, out var result)) return;
+
+            switch (result)
             {
-                if (result > max)
-                {
-                    _perPage = 100;
+                case > max:
+                    _perPage = max;
                     return;
-                }
-
-                if (result < min)
+                case < min:
+                    _perPage = min;
                     return;
-
-                _perPage = result;
+                default:
+                    _perPage = result;
+                    return;
             }
         }
     }
 
-    // default: all, public, or private
+    // default: all
+    // options all, public, private
     [JsonProperty("visibility")]
-    public string? Visibility
+    public string Visibility
     {
         get => $"visibility={_visibility}";
         set
@@ -55,6 +61,57 @@ public class RepositoryRouteParams
     }
 
     // default: owner,collaborator,organization_member
+    // options owner, collaborator, organization_member
     [JsonProperty("affiliation")]
-    public string? Affiliation { get; set; }
+    public string Affiliation
+    {
+        get => $"affiliation={_affiliation}";
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+            _affiliation = value;
+        }
+    }
+
+    // default: 1
+    [JsonProperty("page")]
+    public string Page
+    {
+        get => $"page={_page}";
+        set
+        {
+            const int min = 1;
+
+            if (!int.TryParse(value, out var result)) return;
+
+            switch (result)
+            {
+                case < min:
+                    _page = min;
+                    return;
+                default:
+                    _page = result;
+                    return;
+            }
+        }
+    }
+
+    public NameValueCollection GatherRouteParams()
+    {
+        var routeParams = new NameValueCollection();
+        
+        const char separator = '=';
+        
+        var perPage = PerPage.Split(separator);
+        var visibility = Visibility.Split(separator);
+        var affiliation = Affiliation.Split(separator);
+        var page = Page.Split(separator);
+        
+        routeParams.Add(perPage[0], perPage[1]);
+        routeParams.Add(visibility[0], visibility[1]);
+        routeParams.Add(affiliation[0], affiliation[1]);
+        routeParams.Add(page[0], page[1]);
+
+        return routeParams;
+    }
 }

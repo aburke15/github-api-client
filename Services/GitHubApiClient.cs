@@ -5,8 +5,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using ABU.GitHubApiClient.Abstractions;
 using ABU.GitHubApiClient.Constants;
+using ABU.GitHubApiClient.Helpers;
 using ABU.GitHubApiClient.Models;
 using ABU.GitHubApiClient.Options;
 using Ardalis.GuardClauses;
@@ -46,10 +48,8 @@ public class GitHubApiClient : IGitHubApiClient
 
     public async Task<MethodResult> GetRepositoriesForAuthUserAsync(RepositoryRouteParams routeParams, CancellationToken ct = default)
     {
-        var builder = new UriBuilder($"{GitHubRoutes.BaseUrl}{GitHubRoutes.PrivateReposRoute}")
-        {
-            Query = routeParams.PerPage
-        };
+        const string route = $"{GitHubRoutes.BaseUrl}{GitHubRoutes.PrivateReposRoute}";
+        var builder = UriHelpers.BuildUri(route, routeParams.GatherRouteParams());
 
         return await GetRepositoriesAsync(builder.ToString(), ct);
     }
