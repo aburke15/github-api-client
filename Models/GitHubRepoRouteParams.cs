@@ -1,3 +1,5 @@
+using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -13,7 +15,8 @@ public class RepositoryRouteParams
 
     private readonly List<string> _visibilityList = new() { "all", "public", "private" };
 
-    // default 30, max 100
+    // default: 30
+    // options 30 to 100
     [JsonProperty("per_page")]
     public string PerPage
     {
@@ -40,9 +43,10 @@ public class RepositoryRouteParams
         }
     }
 
-    // default: all, public, or private
+    // default: all
+    // options all, public, private
     [JsonProperty("visibility")]
-    public string? Visibility
+    public string Visibility
     {
         get => $"visibility={_visibility}";
         set
@@ -57,8 +61,9 @@ public class RepositoryRouteParams
     }
 
     // default: owner,collaborator,organization_member
+    // options owner, collaborator, organization_member
     [JsonProperty("affiliation")]
-    public string? Affiliation
+    public string Affiliation
     {
         get => $"affiliation={_affiliation}";
         set
@@ -68,7 +73,7 @@ public class RepositoryRouteParams
         }
     }
 
-    // default 1
+    // default: 1
     [JsonProperty("page")]
     public string Page
     {
@@ -89,5 +94,24 @@ public class RepositoryRouteParams
                     return;
             }
         }
+    }
+
+    public NameValueCollection GatherRouteParams()
+    {
+        var routeParams = new NameValueCollection();
+        
+        const char separator = '=';
+        
+        var perPage = PerPage.Split(separator);
+        var visibility = Visibility.Split(separator);
+        var affiliation = Affiliation.Split(separator);
+        var page = Page.Split(separator);
+        
+        routeParams.Add(perPage[0], perPage[1]);
+        routeParams.Add(visibility[0], visibility[1]);
+        routeParams.Add(affiliation[0], affiliation[1]);
+        routeParams.Add(page[0], page[1]);
+
+        return routeParams;
     }
 }
